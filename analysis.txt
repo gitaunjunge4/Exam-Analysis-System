@@ -1,19 +1,26 @@
-Student: Eve
-Course Name: Math, Score: 70, Grade: F.
-Course Name: Science, Score: 65, Grade: B.
-Overall Grade: 67.5, Overall Letter Grade: B.
-
-
 Student: Gitau
+Reg No.: 101
 Course Name: Math, Score: 85, Grade: A.
-Course Name: Science, Score: 78, Grade: F.
-Overall Grade: 81.5, Overall Letter Grade: A.
+Course Name: Science, Score: 78, Grade: A.
+Overall Score: 81.5, Overall Grade: A.
 
 
 Student: Ivy
+Reg No.: 102
 Course Name: Math, Score: 92, Grade: A.
 Course Name: Science, Score: 88, Grade: A.
-Course Name: History, Score: 75, Grade: F.
-Overall Grade: 85, Overall Letter Grade: A.
+Course Name: History, Score: 75, Grade: A.
+Overall Score: 85, Overall Grade: A.
 
 
+Student: Eve
+Reg No.: 103
+Course Name: Math, Score: 70, Grade: A.
+Course Name: Science, Score: 65, Grade: B.
+Overall Score: 67.5, Overall Grade: B.
+
+
+Class Averages: 
+Average score for History: 75, Average Grade: A
+Average score for Math: 82.3333, Average Grade: A
+Average score for Science: 77, Average Grade: A

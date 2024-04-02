@@ -6,11 +6,27 @@
 
 using namespace std; 
 
+// Structure to represent student information
+struct StudentInfo {
+    string name;
+    int regNo;
+    vector<pair<string, double>> courses;
+
+    StudentInfo() : regNo(0) {} //sets default value to avoid tuple err
+
+    StudentInfo(const string& name, int regNo) : name(name), regNo(regNo) {}
+
+    void addCourse(const string& courseName, double courseScore) {
+        courses.push_back(make_pair(courseName, courseScore));
+    }
+};
+
+
 // function to evaluate the grade 
 char gradeCalculator(double score){
     if (score > 100)
         return 'X';
-    else if (79 <= score && score <= 100)
+    else if (70 <= score && score <= 100)
         return 'A';
     else if (60 <= score && score <= 69)
         return 'B';
@@ -23,37 +39,59 @@ char gradeCalculator(double score){
 }
 
 // function to output student info
-void outputStudentInfo(ofstream& analysisFile, const string& studentName, const vector<pair<string, double>>& courses){ 
-    analysisFile << "Student: " << studentName << '\n';
+void individualStudentInfo(ofstream& analysisFile, const StudentInfo& student, map<string, pair<double, int>>& courseStats){ 
+    analysisFile << "Student: " << student.name << '\n' << "Reg No.: "<< student.regNo << '\n';
     double totalScore = 0.0;  //total score for the students
     map<string, double> courseTotalScore; //stores the total score obtained by the student in each course 
     map<string, int> courseStudentCount;  //stores the number of students taking each course
 
     
     // to iterate over each course-score pair for the student & calculate total score and course totals
-    for (const auto& courseData : courses) {
+    for (const auto& courseData : student.courses) {
         double courseScore = courseData.second;
         char courseGrade = gradeCalculator(courseScore);
         analysisFile << "Course Name: " << courseData.first << ", Score: " << courseScore << ", Grade: " << courseGrade << "." << '\n';
 
         totalScore += courseScore; //adds the courses score to the totalScore var
-        courseTotalScore[courseData.first] += courseScore;  //adds the score of the current course to the total score for that course
-        courseStudentCount[courseData.first]++; //increments the count of students taking the current course by 1
+       
+        // updates the course stats
+        courseStats[courseData.first].first += courseScore;  //adds the score of the current course to the total score for that course
+        courseStats[courseData.first].second++; //increments the count of students taking the current course by 1
     }
 
     // calculates and outputs the overall grade for the student 
-    double overallScore = totalScore / courses.size();
+    double overallScore = totalScore / student.courses.size();
     char overallGrade = gradeCalculator(overallScore);
     analysisFile << "Overall Score: " << overallScore << ", Overall Grade: " << overallGrade << "." << '\n';
 
     // // loops thru the courseTotalScore map and calculates the avgScore for each course 
+    // analysisFile << "Average scores for each course taken by the class: \n";
     // for (const auto& courseEntry : courseTotalScore) {
     //     double avgScore = courseEntry.second / courseStudentCount[courseEntry.first];
-    //     char avgLetterGrade = gradeCalculator(avgScore);
-    //     analysisFile << "Average score for " << courseEntry.first << ": " << avgScore << ", Average Grade: " << avgLetterGrade << '\n';
+    //     char avgGrade = gradeCalculator(avgScore);
+    //     analysisFile << "Average score for " << courseEntry.first << ": " << avgScore << ", Average Grade: " << avgGrade << '\n';
     // }
 
     analysisFile << '\n' << '\n';
+}
+
+// Function to compute class averages for courses
+void classAverage(ofstream& analysisFile, const map<string, pair<double, int>>& courseStats) {
+    analysisFile << "Class Averages: \n";
+
+    for (const auto& courseData : courseStats) {
+        const string& courseName = courseData.first;
+        double totalScore = courseData.second.first; // total score obtained by all students in this course
+        int numStudents = courseData.second.second; // no. of students taking this course
+
+        if (numStudents > 0) {
+            double avgScore = totalScore / numStudents;
+            char avgGrade = gradeCalculator(avgScore);
+            analysisFile << "Average score for " << courseName << ": " << avgScore << ", Average Grade: " << avgGrade << '\n';
+        } else {
+            analysisFile << "No students took " << courseName << '\n';
+        }
+    }
 }
 
 int main() {
@@ -75,25 +113,35 @@ int main() {
         return 1;
     }
 
-    // key is the student name and the value is the course and the score as a pair, map name is studentData
-    map<string, vector<pair<string, double>>> studentData;
+    // key is the student reg no and the value is the student details, map name is studentData
+    map<int, StudentInfo> studentData;
 
-    // reads each line from the result.txt and parses the info into the line var for storage
+    // key is the course name, value is total score and no. of students
+    map<string, pair<double, int>> courseStats;
+
+    // reads each line from the result.txt and parses the info into the line var
     string line;      
     while (getline(resultFile, line)) {      
         stringstream ss(line);    // creates stringstream object ss initialized with the current line read from the resultFile
-        string name, regNo, course; 
+        string name, course; 
+        int regNo;
         double score;
         ss >> name >> regNo >> course >> score; // extracts data from the stringstream and stores them in the declared variables
-        studentData[name].push_back(make_pair(course, score)); 
+        
+        // ccheks if the student is already in the map, if not, add them
+        if (studentData.find(regNo) == studentData.end()) {
+            studentData[regNo] = StudentInfo(name, regNo);
+        }
+        // Add the course and score to the student's information
+        studentData[regNo].addCourse(course, score); 
     }
 
-    // loops thru each element in the map studentData and passes it as args to the outputStudentInfo function
+    // loops thru each element in the map studentData and student as args
     for (const auto& entry : studentData) {
-        const string& studentName = entry.first;
-        const vector<pair<string, double>>& courses = entry.second;
-        outputStudentInfo(analysisFile, studentName, courses);
+        const StudentInfo& student = entry.second;
+        individualStudentInfo(analysisFile, student, courseStats);
     }
+    classAverage(analysisFile, courseStats);
 
     cout << "Exam analysis has been written to analysis.txt" << '\n';
 
