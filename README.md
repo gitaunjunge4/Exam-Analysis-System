@@ -51,7 +51,7 @@ the system
 -name of the students and their reg no. courses taken by the student and their score
 
 2. reads the file
--checks is the files are created
+-checks if the file is created
 
 3. 
 

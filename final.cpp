@@ -4,26 +4,50 @@
 #include <vector>
 #include <sstream>
 
-using namespace std;
+using namespace std; 
+
+// class for the Course
+class Course {
+public:
+    string name;
+    double score;
+
+    Course(const string& name, double score) : name(name), score(score) {}
+};
+
+// class for the Students
+// it enables the user to have more than one course under their name 
+class Student {
+public:
+    string name;
+    int regNo;
+    vector<Course> courses;
+
+    Student(const string& name, int regNo) : name(name), regNo(regNo) {}
+
+    void addCourse(const string& courseName, double courseScore) {
+        courses.push_back(Course(courseName, courseScore));
+    }
+};
 
 // function to evaluate the grade 
-const char* gradeCalculator(double score){
-    if (score >= 70)
-        return "A";
+char gradeCalculator(double score){
+    if (score > 100)
+        return 'X';
+    else if (79 <= score && score <= 100)
+        return 'A';
     else if (60 <= score && score <= 69)
-        return "B";
+        return 'B';
     else if (50 <= score && score <= 59)
-        return "C";
+        return 'C';
     else if (40 <= score && score <= 49)
-        return "D";
+        return 'D';
     else
-        return "F";
-} 
+        return 'F';
+}
 
 // function to output student info
-void outputStudentInfo( ofstream& analysisFile, 
-                        const string& studentName, 
-                        const vector<pair<string, double>>& courses){ 
+void outputStudentInfo( ofstream& analysisFile, const string& studentName, const vector<pair<string, double>>& courses){ 
     analysisFile << "Student: " << studentName << '\n';
     double totalScore = 0.0;
     map<string, double> courseTotalScore; //stores the total score obtained by the student in each course 
@@ -33,7 +57,7 @@ void outputStudentInfo( ofstream& analysisFile,
     // calculates total score and course totals
     for (const auto& courseScore : courses) {
         double score = courseScore.second;
-        char grade = calculateGrade(score);
+        char grade = gradeCalculator(score);
         analysisFile << "Course Name: " << courseScore.first << ", Score: " << score << ", Grade: " << grade << "." << '\n';
 
         totalScore += score; //adds the courses score to the totalScore var
@@ -43,33 +67,33 @@ void outputStudentInfo( ofstream& analysisFile,
 
     // calculates and outputs the overall grade for the student 
     double overallGrade = totalScore / courses.size();
-    char overallLetterGrade = calculateGrade(overallGrade);
+    char overallLetterGrade = gradeCalculator(overallGrade);
     analysisFile << "Overall Grade: " << overallGrade << ", Overall Letter Grade: " << overallLetterGrade << "." << '\n';
 
     // loops thru the courseTotalScore map and calculates the avgScore for each course 
     for (const auto& courseEntry : courseTotalScore) {
         double avgScore = courseEntry.second / courseStudentCount[courseEntry.first];
-        char avgLetterGrade = calculateGrade(avgScore);
+        char avgLetterGrade = gradeCalculator(avgScore);
         analysisFile << "Average score for " << courseEntry.first << ": " << avgScore << ", Average Grade: " << avgLetterGrade << '\n';
     }
 
     analysisFile << '\n';
 }
 
-
 int main() {
     ifstream resultFile("results.txt");    // read input file
 
     ofstream analysisFile("analysis.txt");   // creates the output file
 
-    // checks if the files were opened and read
+    // checks if the file was read
     if(!resultFile){
-        cerr << "Error: Unable to open and read the result file."
+        cerr << "Error: Unable to read the result file.";
         return 1;
     }
-    // checks if the files were created 
+
+    // checks if the file was created 
     if(!analysisFile){
-        cerr << "Error: Unable to create the output file."
+        cerr << "Error: Unable to create the output file.";
         return 1;
     }
 
@@ -77,9 +101,9 @@ int main() {
     map<string, vector<pair<string, double>>> studentData;
 
     // reads each line from the result.txt
-    string line;      // Declares a var line that stores each line of the resultFile
-    while (getline(resultFile, line)) {      // the loop reads each line of the resultFile using getline()
-        stringstream ss(line);    // creates stringstream object ss initialized with the current line read from the input file
+    string line;      
+    while (getline(resultFile, line)) {      
+        stringstream ss(line);    // creates stringstream object ss initialized with the current line read from the resultFile
         string name, regNo, course; 
         double score;
         ss >> name >> regNo >> course >> score; // extracts data from the stringstream and stores them in the declared variables
@@ -91,7 +115,7 @@ int main() {
         outputStudentInfo(analysisFile, entry.first, entry.second);
     }
 
-    cout << "Analysis has been written to analysis.txt" << '\n';
+    cout << "Exam analysis has been written to analysis.txt" << '\n';
 
     return 0;
 }

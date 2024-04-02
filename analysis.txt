@@ -1,1 +1,23 @@
-Your score is 70 and grade is A
+Student: Alice
+Course Name: Math, Score: 92, Grade: A.
+Course Name: Science, Score: 88, Grade: A.
+Course Name: History, Score: 75, Grade: F.
+Overall Grade: 85, Overall Letter Grade: A.
+Average score for History: 75, Average Grade: F
+Average score for Math: 92, Average Grade: A
+Average score for Science: 88, Average Grade: A
+
+Student: Bob
+Course Name: Math, Score: 70, Grade: F.
+Course Name: Science, Score: 65, Grade: B.
+Overall Grade: 67.5, Overall Letter Grade: B.
+Average score for Math: 70, Average Grade: F
+Average score for Science: 65, Average Grade: B
+
+Student: John
+Course Name: Math, Score: 85, Grade: A.
+Course Name: Science, Score: 78, Grade: F.
+Overall Grade: 81.5, Overall Letter Grade: A.
+Average score for Math: 85, Average Grade: A
+Average score for Science: 78, Average Grade: F
+
