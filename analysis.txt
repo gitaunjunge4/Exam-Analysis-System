@@ -1,26 +1,60 @@
-Student: Gitau
-Reg No.: 101
-Course Name: Math, Score: 85, Grade: A.
-Course Name: Science, Score: 78, Grade: A.
-Overall Score: 81.5, Overall Grade: A.
+Student: Charlie
+Reg No.: 5645
+Course Name: Math, Score: 7e+01, Grade: A.
+Overall Score: 7e+01, Overall Grade: A.
 
 
-Student: Ivy
-Reg No.: 102
-Course Name: Math, Score: 92, Grade: A.
-Course Name: Science, Score: 88, Grade: A.
-Course Name: History, Score: 75, Grade: A.
-Overall Score: 85, Overall Grade: A.
+Student: John
+Reg No.: 12345
+Course Name: Math, Score: 9e+01, Grade: A.
+Course Name: Physics, Score: 8e+01, Grade: A.
+Overall Score: 8e+01, Overall Grade: A.
 
 
 Student: Eve
-Reg No.: 103
-Course Name: Math, Score: 70, Grade: A.
-Course Name: Science, Score: 65, Grade: B.
-Overall Score: 67.5, Overall Grade: B.
+Reg No.: 45645
+Course Name: Math, Score: 7e+01, Grade: A.
+Course Name: Science, Score: 6e+01, Grade: B.
+Overall Score: 7e+01, Overall Grade: B.
+
+
+Student: Bob
+Reg No.: 54321
+Course Name: Math, Score: 8e+01, Grade: A.
+Course Name: Physics, Score: 8e+01, Grade: A.
+Overall Score: 8e+01, Overall Grade: A.
+
+
+Student: Gitau
+Reg No.: 67544
+Course Name: Math, Score: 8e+01, Grade: A.
+Course Name: Science, Score: 8e+01, Grade: A.
+Overall Score: 8e+01, Overall Grade: A.
+
+
+Student: Alice
+Reg No.: 67890
+Course Name: Math, Score: 9e+01, Grade: A.
+Course Name: Physics, Score: 9e+01, Grade: A.
+Overall Score: 9e+01, Overall Grade: A.
+
+
+Student: Charlie
+Reg No.: 106453
+Course Name: Science, Score: 6e+01, Grade: B.
+Overall Score: 6e+01, Overall Grade: B.
+
+
+Student: Ivy
+Reg No.: 5654344
+Course Name: Math, Score: 9e+01, Grade: A.
+Course Name: Science, Score: 9e+01, Grade: A.
+Course Name: History, Score: 8e+01, Grade: A.
+Overall Score: 8e+01, Overall Grade: A.
 
 
 Class Averages: 
-Average score for History: 75, Average Grade: A
-Average score for Math: 82.3333, Average Grade: A
-Average score for Science: 77, Average Grade: A
+Average score for History: 8e+01, Average Grade: A
+Average score for Math: 8e+01, Average Grade: A
+Average score for Physics: 8e+01, Average Grade: A
+Average score for Science: 7e+01, Average Grade: A
